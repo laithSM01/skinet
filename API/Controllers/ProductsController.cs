@@ -1,4 +1,5 @@
 ﻿using API.Dtos;
+using API.Errors;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -9,9 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductsController : ControllerBase
+    public class ProductsController : BaseApiController
     {
         private readonly IGenericRepository<Product> _prodcutRepo;
         private readonly IGenericRepository<ProductBrand> _productBrandRepo;
@@ -50,10 +49,13 @@ namespace API.Controllers
             //}).ToList();
         }
         [HttpGet("{id}")]
+        [ProducesResponseType(statusCode:200)]
+        [ProducesResponseType(typeof(ApiResponse), statusCode:404)]//this is to match our new class to swagger document
         public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
             var specification = new ProductswithTypesAndBrandsSpecification(id);
             var product = await _prodcutRepo.GetEntityWithSpec(specification);
+            if(product == null) return NotFound(new ApiResponse(404));
             return _mapper.Map<Product, ProductToReturnDto>(product);
         }
         [HttpGet("brands")]
