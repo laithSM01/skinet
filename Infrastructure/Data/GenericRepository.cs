@@ -18,6 +18,12 @@ namespace Infrastructure.Data
         {
             _context = context;
         }
+
+        public async Task<int> CountAsync(ISpecification<T> specification)
+        {
+           return await ApplySpecification(specification).CountAsync();
+        }
+
         public async Task<IReadOnlyList<T>> GetAllAsync()
         {
             //set the entity that we will be working with, we don't know the entity which is coming
