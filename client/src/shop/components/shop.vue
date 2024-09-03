@@ -108,7 +108,6 @@ export default {
           this.shopParams.pageNumber = response.pageIndex;
           this.shopParams.pageSize = response.pageSize;
           this.totalCount = response.count;
-          console.log(response);
         })
         .catch((error) => {
           console.error("Error fetching products:", error);
@@ -144,7 +143,6 @@ export default {
     },
     onSearch() {
       this.shopParams.search
-      console.log(this.shopParams.search)
       this.getProducts()
     },
     onReset() {
