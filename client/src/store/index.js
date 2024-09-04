@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import ShopService from "@/shop/service/shop.service";
 
 Vue.use(Vuex);
 
@@ -12,7 +13,6 @@ export default new Vuex.Store({
   getters: {
     fetchProduct: state => {
       state.selectedProduct
-      console.log(state.selectedProduct)
     }
   },
   mutations: {
@@ -22,7 +22,12 @@ export default new Vuex.Store({
   },
   actions: {
     selectProduct({ commit }, product) {
-      commit('SET_SELECTED_PRODUCT', product);
+      ShopService.getProduct(product.id)
+      .then(res => {
+        res.data.id = product.id
+        commit('SET_SELECTED_PRODUCT', res.data);
+        localStorage.setItem('selectedProduct', JSON.stringify(res));
+      })
     },
   },
   modules: {},

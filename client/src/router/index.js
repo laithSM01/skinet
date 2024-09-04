@@ -6,20 +6,79 @@ import productDetails from "@/shop/components/product-details.vue";
 
 Vue.use(VueRouter);
 
+// router.vue
 const routes = [
   {
-    path: "/",
     name: "home",
+    meta: {
+      title: "home",
+      breadcrumb: [
+        {
+          text: "home",
+          disabled: false,
+          active: false,
+          to: { name: "home" },
+          parent: null, // No parent for the home route
+        },
+      ],
+    },
+    path: "/",
     component: HomeView,
   },
   {
-    path: "/shop",
     name: "shop",
+    meta: {
+      title: "shop",
+      breadcrumb: [
+        {
+          text: "home",
+          disabled: false,
+          active: false,
+          to: { name: "home" },
+          parent: null, // No parent for the home route
+        },
+        {
+          text: "shop",
+          disabled: false,
+          active: false,
+          to: { name: "shop" },
+          parent: "home", // Parent is the home route
+        },
+      ],
+    },
+    path: "/shop",
     component: ShopView,
   },
   {
-    path: "/product/:id",
     name: "product-details",
+    meta: {
+      title: "product-details",
+      breadcrumb: [
+        {
+          text: "home",
+          disabled: false,
+          active: false,
+          to: { name: "home" },
+          parent: null, // No parent for the home route
+        },
+        {
+          text: "shop",
+          disabled: false,
+          active: false,
+          to: { name: "shop" },
+          parent: "home", // Parent is the home route
+        },
+        {
+          text: "product-details",
+          disabled: false,
+          active: false,
+          to: { name: "product-details" },
+          parent: "shop", // Parent is the shop route
+        },
+      ],
+      productName: null,
+    },
+    path: "/product/:id",
     component: productDetails,
   },
 ];

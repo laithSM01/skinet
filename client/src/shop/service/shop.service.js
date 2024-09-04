@@ -16,7 +16,6 @@ import axios from 'axios';
       params.append('sort', shopParams.sort)
       params.append('pageIndex', shopParams.pageNumber)
       params.append('pageSize', shopParams.pageSize)
-      console.log(shopParams.search)
       if(shopParams.search) {
         params.append('search', shopParams.search)
       }
@@ -30,6 +29,9 @@ import axios from 'axios';
     }
     static  getProductTypes() {
         return axios.get(this.baseUrl + 'Products/types')
+    }
+    static getProduct(id) {
+      return axios.get(this.baseUrl + `Products/${id}`)
     }
 }
 export default ShopService; 

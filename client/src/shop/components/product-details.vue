@@ -25,23 +25,30 @@ import { mapState, mapActions } from 'vuex';
 export default {
   computed: {
     ...mapState(['selectedProduct']),
+    storedProduct(){
+      return null;
+    },
   },
   methods: {
-     fetchProduct(productId) {
-  try {
-    const response =  fetch(`/product/${productId}`);
-    const product =  response.json();
-    console.log(product, "fetching")
-    this.selectedProduct = product; // Store in local state
-    console.log("still fetching",this.selectedProduct )
-  } catch (error) {
-    console.error("Error fetching product:", error);
-  }
-},
-    },
-    created() {
-        const productId = this.$route.params.id;
-        this.fetchProduct(productId);
+    ...mapActions(['selectProduct']),
+  },
+  created() {
+    const productId = this.$route.params.id;
+    // Check if product is already in local storage
+    
+    const storedProduct = localStorage.getItem('selectedProduct');
+    if (storedProduct) {
+      // If found, set it in the store
+      const parsedProduct = JSON.parse(storedProduct);
+      const product = parsedProduct.data;
+      this.$store.commit('SET_SELECTED_PRODUCT', product);
+    } else {
+      this.$store.dispatch('selectProduct', productId);
     }
-  };
+  },
+  beforeDestroy() {
+    // Save the selected product to local storage
+    localStorage.setItem('selectedProduct', JSON.stringify(this.selectedProduct));
+  },
+};
 </script>
