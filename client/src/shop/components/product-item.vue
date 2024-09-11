@@ -8,7 +8,7 @@
       <span class="mb-2">{{ product.price | currency }}</span>
 
       <div class="d-flex align-items-center justify-content-center hover-overlay">
-        <button class="btn btn-outline-secondary fa fa-shopping-cart me-2"></button>
+        <button @click="addTobasket()" class="btn btn-outline-secondary bi bi-shopping-cart me-2"></button>
         <button @click="goProdcutDetails(product)" class="btn btn-outline-secondary">View</button>
       </div>
     </div>
@@ -16,16 +16,38 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
+import BasketService from '@/basket/service/basket.service';
 export default {
+  data() {
+    return null
+  },
   props: ["product"],
+  computed: {
+    ...mapState(['selectedProduct', 'basket']),
+    mapProductItemToBasketItem(item) {
+    return {
+      id: item.id,
+      productName: item.name,
+      price: item.price,
+      quantity: 0,
+      pictureUrl: item.pictureUrl,
+      brand: item.productBrand,
+      type: item.productType
+    };
+  },
+  },
   methods: {
-    ...mapActions(['selectProduct']),
+    ...mapActions(['selectProduct', 'addItemToBasket']),
     goProdcutDetails(product) {
         this.$store.dispatch('selectProduct', product)
         .then(() => {
           this.$router.push(`/product/${product.id}`);
         })
+    },
+   
+    addTobasket() {
+      BasketService.addItemToBasket(this.product)
     }
   },
 };

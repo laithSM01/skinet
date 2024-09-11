@@ -8,6 +8,7 @@ import BootstrapVue from 'bootstrap-vue'
 // Import Bootstrap and BootstrapVue CSS files (if using CSS)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 Vue.config.productionTip = false;
 

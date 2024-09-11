@@ -1,8 +1,33 @@
 <template>
   <div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <!-- Search input on the left -->
+      <div class="d-flex align-items-center">
+        <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i> </button>
+      </form>
+      </div>
+      
+      <!-- Centered logo/image -->
+      <div class="mx-auto">
+        <router-link class="navbar-brand" to="/"><img src="../../assets/images/logo.png"></router-link>
+      </div>
+      
+      <!-- Login and Wishlist icons on the right -->
+      <div class="d-flex align-items-center fs-2">
+        <router-link class="nav-link" to="/basket"> <!-- Link for wishlist -->
+          <i class="bi bi-heart wishlist"/>
+        </router-link>
+        <a class="nav-link" href="#"> <!-- Link for login -->
+          <i class="bi bi-person"/> <!-- Assuming you are using Bootstrap icons -->
+        </a>
+      </div>
+    </div>
+  </nav>
 <nav class="navbar navbar-expand-lg bg-body-tertiary box">
   <div class="container-fluid">
-    <router-link class="navbar-brand" to="/"><img src="../../assets/images/logo.png"></router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -32,10 +57,7 @@
           <a class="nav-link disabled" aria-disabled="true">Disabled</a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+   
     </div>
   </div>
 </nav>

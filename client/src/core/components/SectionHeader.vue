@@ -7,7 +7,7 @@
         :href="crumb.to.path"
         :active="index === breadcrumbs.length - 1"
       >
-        {{ crumb.text }}
+        {{ crumb.text === 'product-details' ? selectedProduct?.name : crumb.text }}
       </b-breadcrumb-item>
     </b-breadcrumb>
   </nav>
@@ -36,29 +36,13 @@ export default {
         }
       };
 
-      // Check if the path has "shop/" and something after it
-      const lastCrumbText = crumbs[crumbs.length - 1].text;
-      const pathAfterShop = lastCrumbText.split('/').slice(-1)[0]; // Get the last part of the path
-
-      if (pathAfterShop !== "shop" && pathAfterShop !== "home") {
-        // If there's something after "shop/", update the breadcrumb
-        // Use the selectedProduct from the store
-        if (this.selectedProduct?.name) {
-          crumbs[crumbs.length - 1].text = this.selectedProduct?.name;
-        }
-      }
-
       findParent(crumbs[crumbs.length - 1].text);
       return hierarchy;
     },
   },
-  created() {
-    // You might need to check if selectedProduct is available here
-    // if you are navigating to the product details page before the product is loaded
-    // You can use a watcher for that
-  }
 };
 </script>
+
 <style>
 .bread-crumb {
   background-color: #f5f5f5;

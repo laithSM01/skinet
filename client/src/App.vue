@@ -9,10 +9,23 @@
 <script>
 import navBar from "./core/components/nav-bar.vue"
 import sectionHeader from "./core/components/SectionHeader"
+import BasketService from "./basket/service/basket.service";
+import { error } from "jquery";
 export default {
   components: {
     appNavBar: navBar,
     appSectionHeader: sectionHeader
+  },
+  created() {
+    const basketId = localStorage.getItem('basket_id')
+    if(basketId) {
+      BasketService.getBasket(basketId)
+      .then(() => {
+        console.log('initialised basket');
+      }, error => {
+        console.log(error)
+      });
+    }
   }
 }
 </script>
