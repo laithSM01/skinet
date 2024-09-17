@@ -10,7 +10,6 @@
 import navBar from "./core/components/nav-bar.vue"
 import sectionHeader from "./core/components/SectionHeader"
 import BasketService from "./basket/service/basket.service";
-import { error } from "jquery";
 export default {
   components: {
     appNavBar: navBar,

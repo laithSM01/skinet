@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import ShopView from "@/views/ShopView.vue";
 import BasketView from "@/views/BasketView.vue";
+import CheckoutView from "@/views/CheckoutView.vue";
 import productDetails from "@/shop/components/product-details.vue";
 
 Vue.use(VueRouter);
@@ -105,6 +106,30 @@ const routes = [
     },
     path: "/basket",
     component: BasketView,
+  },
+  {
+    name: "checkout",
+    meta: {
+      title: "checkout",
+      breadcrumb: [
+        {
+          text: "home",
+          disabled: false,
+          active: false,
+          to: { name: "home" },
+          parent: null, // No parent for the home route
+        },
+        {
+          text: "checkout",
+          disabled: false,
+          active: false,
+          to: { name: "checkout" },
+          parent: "home", // Parent is the home route
+        },
+      ],
+    },
+    path: "/checkout",
+    component: CheckoutView,
   },
 ];
 

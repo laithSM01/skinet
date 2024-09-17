@@ -8,7 +8,7 @@
       <span class="mb-2">{{ product.price | currency }}</span>
 
       <div class="d-flex align-items-center justify-content-center hover-overlay">
-        <button @click="addTobasket()" class="btn btn-outline-secondary bi bi-shopping-cart me-2"></button>
+        <button @click="addTobasket()" class="btn btn-outline-secondary bi bi-cart me-2"></button>
         <button @click="goProdcutDetails(product)" class="btn btn-outline-secondary">View</button>
       </div>
     </div>
@@ -17,15 +17,10 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import BasketService from '@/basket/service/basket.service';
 export default {
   data() {
-    return null
-  },
-  props: ["product"],
-  computed: {
-    ...mapState(['selectedProduct', 'basket']),
-    mapProductItemToBasketItem(item) {
+    return {
+      mapProductItemToBasketItem(item) {
     return {
       id: item.id,
       productName: item.name,
@@ -36,6 +31,12 @@ export default {
       type: item.productType
     };
   },
+    }
+  },
+  props: ["product"],
+  computed: {
+    ...mapState(['selectedProduct', 'basket']),
+    
   },
   methods: {
     ...mapActions(['selectProduct', 'addItemToBasket']),
@@ -47,7 +48,8 @@ export default {
     },
    
     addTobasket() {
-      BasketService.addItemToBasket(this.product)
+      this.$store.dispatch('addItemToBasket', this.mapProductItemToBasketItem(this.product))
+      //BasketService.addItemToBasket(this.mapProductItemToBasketItem(this.product))
     }
   },
 };

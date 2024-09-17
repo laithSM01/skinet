@@ -154,6 +154,7 @@ export default {
     this.getProducts();
     this.getBrands();
     this.getTypes();
+    this.$store.dispatch('getBasket', localStorage.getItem('basket_id'))
   },
 };
 </script>

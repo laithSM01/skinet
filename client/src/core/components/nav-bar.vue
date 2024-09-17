@@ -18,7 +18,7 @@
       <!-- Login and Wishlist icons on the right -->
       <div class="d-flex align-items-center fs-2">
         <router-link class="nav-link" to="/basket"> <!-- Link for wishlist -->
-          <i class="bi bi-heart wishlist"/>
+          <i class="bi bi-cart wishlist"/> {{ $store.state.basket.items.length }}
         </router-link>
         <a class="nav-link" href="#"> <!-- Link for login -->
           <i class="bi bi-person"/> <!-- Assuming you are using Bootstrap icons -->

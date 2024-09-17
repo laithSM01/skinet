@@ -30,8 +30,8 @@ import axios from 'axios';
     static  getProductTypes() {
         return axios.get(this.baseUrl + 'Products/types')
     }
-    static getProduct(id) {
-      return axios.get(this.baseUrl + `Products/${id}`)
+    static async getProduct(id) {
+      return await axios.get(this.baseUrl + `Products/${id}`)
     }
 }
 export default ShopService; 
