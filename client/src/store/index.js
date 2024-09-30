@@ -41,17 +41,15 @@ export default new Vuex.Store({
       }
 
       if(!localStorage.getItem('basket_id')){
-        if (!state.basket.id) {
           state.basket.id = uuidv4(); // Generate UUID if ID is missing
           localStorage.setItem('basket_id', state.basket.id);
-        }
       } else {
        state.basket.id =  localStorage.getItem('basket_id')
       }
     },
      REMOVE_ITEM_FROM_BASKET(state, {id, quantity = 1}) {
-      if (!state.basket) return;
-      const itemIndex = state.basket.items.findIndex(i => i.id === id);
+       if (!state.basket) return;
+       const itemIndex = state.basket.items.findIndex(i => i.id === id);
       if (itemIndex !== -1) {
         state.basket.items[itemIndex].quantity -= quantity;
         if (state.basket.items[itemIndex].quantity <= 0) {
@@ -81,13 +79,18 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-    async removeItemFromBasket({commit, state}, id) {
-      commit('REMOVE_ITEM_FROM_BASKET', {id})
+    async removeItemFromBasket({commit, state}, {id, quantity}) {
+      commit('REMOVE_ITEM_FROM_BASKET', {id, quantity})
       if (state.basket.items.length > 0) {
-        await BasketService.setBasket(state.basket);
+       await BasketService.setBasket(state.basket);
       } else {
-        BasketService.deleteBasket(state.basket);
+        localStorage.removeItem('basket_id');
+       BasketService.deleteBasket(state.basket);
       }
+    },
+    async decrementQuantity({commit, state}, id) {
+      commit('REMOVE_ITEM_FROM_BASKET', {id})
+       await BasketService.setBasket(state.basket);
     },
     async getBasket({commit}, id) {
       await BasketService.getBasket(id)

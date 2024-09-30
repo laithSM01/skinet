@@ -2,7 +2,7 @@
 import axios from 'axios';
  class ShopService {
     static get baseUrl() {
-        return "http://localhost:5212/api/";
+        return "https://localhost:5212/api/";
       }
 
     static  getProducts(shopParams) {

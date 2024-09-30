@@ -3,7 +3,7 @@ import axios from 'axios';
 import Vue from "vue";
 
 class BasketService {
-  static baseUrl = "http://localhost:5212/api/";
+  static baseUrl = "https://localhost:5212/api/";
 
   static async getBasket(id) {
     try {

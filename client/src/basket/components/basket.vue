@@ -101,7 +101,7 @@ export default {
       this.$store.dispatch('addItemToBasket', item)
     },
     removeItem(id) {
-      this.$store.dispatch('removeItemFromBasket', id)
+      this.$store.dispatch('decrementQuantity', id)
     }
   },
   computed: {
