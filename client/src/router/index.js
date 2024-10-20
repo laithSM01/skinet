@@ -5,8 +5,21 @@ import ShopView from "@/views/ShopView.vue";
 import BasketView from "@/views/BasketView.vue";
 import CheckoutView from "@/views/CheckoutView.vue";
 import productDetails from "@/shop/components/product-details.vue";
+import LoginView from "@/views/LoginView.vue";
+import RegisterView from "@/views/RegisterView.vue";
 
 Vue.use(VueRouter);
+export function authGuard(to, from, next) {
+  const token = localStorage.getItem('token');
+  
+  if (token) {
+    // Optionally, you can add additional checks like token expiration here
+    next(); // Allow navigation to the requested route
+  } else {
+    // Redirect to login page if no token is found
+    next({ name: 'login' }); // Assuming 'login' is the name of your login route
+  }
+}
 
 // router.vue
 const routes = [
@@ -130,6 +143,55 @@ const routes = [
     },
     path: "/checkout",
     component: CheckoutView,
+    beforeEnter: authGuard // Apply auth guard to this route
+  },
+  {
+    name: "login",
+    meta: {
+      title: "login",
+      breadcrumb: [
+        {
+          text: "",
+          disabled: false,
+          active: false,
+          to: { name: "home" },
+          parent: null, // No parent for the home route
+        },
+        {
+          text: "login",
+          disabled: false,
+          active: false,
+          to: { name: "login" },
+          parent: "home", // Parent is the home route
+        },
+      ],
+    },
+    path: "/login",
+    component: LoginView,
+  },
+  {
+    name: "register",
+    meta: {
+      title: "register",
+      breadcrumb: [
+        {
+          text: "",
+          disabled: false,
+          active: false,
+          to: { name: "home" },
+          parent: null, // No parent for the home route
+        },
+        {
+          text: "register",
+          disabled: false,
+          active: false,
+          to: { name: "register" },
+          parent: "home", // Parent is the home route
+        },
+      ],
+    },
+    path: "/register",
+    component: RegisterView,
   },
 ];
 

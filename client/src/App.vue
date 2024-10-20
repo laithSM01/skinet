@@ -7,26 +7,40 @@
 </template>
 
 <script>
-import navBar from "./core/components/nav-bar.vue"
-import sectionHeader from "./core/components/SectionHeader"
+import navBar from "./core/components/nav-bar.vue";
+import sectionHeader from "./core/components/SectionHeader";
 import BasketService from "./basket/service/basket.service";
+import AccountService from "./account/service/account.service";
 export default {
   components: {
     appNavBar: navBar,
-    appSectionHeader: sectionHeader
+    appSectionHeader: sectionHeader,
+  },
+  computed: {
+    token() {
+     return localStorage.getItem("token")
+    }
   },
   created() {
-    const basketId = localStorage.getItem('basket_id')
-    if(basketId) {
-      BasketService.getBasket(basketId)
-      .then(() => {
-        console.log('initialised basket');
-      }, error => {
-        console.log(error)
-      });
+    this.getBasket();
+    this.$store.dispatch('getCurrentUser')
+  },
+  methods: {
+    getBasket() {
+      const basketId = localStorage.getItem("basket_id");
+    if (basketId) {
+      BasketService.getBasket(basketId).then(
+        () => {
+          console.log("initialised basket");
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
+    },
   }
-}
+};
 </script>
 
 <style lang="scss">

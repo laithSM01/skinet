@@ -1,7 +1,4 @@
 import axios from 'axios';
-
-import Vue from "vue";
-
 class BasketService {
   static baseUrl = "https://localhost:5212/api/";
 

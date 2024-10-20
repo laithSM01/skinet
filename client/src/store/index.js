@@ -2,16 +2,21 @@ import Vue from "vue";
 import Vuex from "vuex";
 import ShopService from "@/shop/service/shop.service";
 import BasketService from "@/basket/service/basket.service";
+import accountService from '@/account/service/account.service'
 import { v4 as uuidv4 } from 'uuid';
+import { error } from "jquery";
 
 Vue.use(Vuex);
+const currentUserSource = Vue.observable({ user: null });
 
 export default new Vuex.Store({
   state() {
     return {
       selectedProduct: null, // Initially no product selected
       basket: { items: [] },
-      basketTotals: null
+      basketTotals: null,
+      currentUser: currentUserSource.user,
+      errorMessages: []
     };
   },
   getters: {
@@ -59,6 +64,15 @@ export default new Vuex.Store({
     },
     GET_BASKET(state, basket) {
       state.basket = basket;
+    },
+    SET_USER(state, user) {
+      state.currentUser = user;
+    },
+    SET_CURRENT_USER(state, user) {
+      state.currentUser = user;
+    },
+    SET_ERRORS(state, errors) {
+      state.errorMessages = errors;
     }
 
   },
@@ -97,7 +111,29 @@ export default new Vuex.Store({
       .then(res => {
         commit('GET_BASKET', res)
       })
-    }
+    },
+    async login({ commit }, user) {
+      await accountService.login(user).then(res => {
+        commit('SET_USER', res);
+    }, error => {
+        console.log(error)
+    })
+    },
+    async getCurrentUser({commit}) {
+      await accountService.getUser(). then(res => {
+        commit('SET_USER', res);
+      //  console.log('from store: ',res)
+      }, error => {
+        console.log(error)
+      });
+    },
+    async signup({ commit }, user) {
+      await accountService.register(user).then(res => {
+        // commit('SET_USER', res);
+      }, error => {
+        commit('SET_ERRORS', error.response.data.errors);
+    })
+    },
   },
   modules: {},
 });
