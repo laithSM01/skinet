@@ -19,10 +19,12 @@ namespace Infrastructure.Data
             _context = context;
         }
 
+
         public async Task<int> CountAsync(ISpecification<T> specification)
         {
            return await ApplySpecification(specification).CountAsync();
         }
+
 
         public async Task<IReadOnlyList<T>> GetAllAsync()
         {
@@ -46,6 +48,7 @@ namespace Infrastructure.Data
             return await ApplySpecification(spec).ToListAsync(); // list of things :D
         }
 
+
         /*
          * T will be replaced with products for example
          * and converted into Queryable
@@ -55,5 +58,19 @@ namespace Infrastructure.Data
         {
             return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
         }
+        public void Add(T entity)
+        {
+            _context.Set<T>().Add(entity);
+        }
+        public void Update(T entity)
+        {
+            _context.Set<T>().Attach(entity); //attach this entity to be changed
+            _context.Entry(entity).State = EntityState.Modified; // marks entity as modified
+        }
+        public void Delete(T entity)
+        {
+            _context.Set<T>().Remove(entity);
+        }
+
     }
 }

@@ -26,6 +26,8 @@ var builder = WebApplication.CreateBuilder(args);
  * and when the request is finished it dispose of the controlelr and repo
  */
 builder.Services.AddScoped<ITokenService, TokenServices>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
