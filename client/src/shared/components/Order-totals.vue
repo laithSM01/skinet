@@ -29,7 +29,7 @@ export default {
     computed: {
         totals() {
             return this.$store.getters.calculateTotals
-        }
+        },
     },
 }
 </script>

@@ -4,7 +4,6 @@ import ShopService from "@/shop/service/shop.service";
 import BasketService from "@/basket/service/basket.service";
 import accountService from '@/account/service/account.service'
 import { v4 as uuidv4 } from 'uuid';
-import { error } from "jquery";
 
 Vue.use(Vuex);
 const currentUserSource = Vue.observable({ user: null });
@@ -16,17 +15,25 @@ export default new Vuex.Store({
       basket: { items: [] },
       basketTotals: null,
       currentUser: currentUserSource.user,
-      errorMessages: []
+      errorMessages: [],
+      shipping: 0,
+      deliveryMethodId: null,
+      shipToAddress: {
+        firstName: '',
+        lastName: '',
+        street: '',
+        city: '',
+        state: '',
+        country: '',
+        zipcode: ''
+      }
     };
   },
   getters: {
-    fetchProduct: state => {
-      state.selectedProduct
-    },
     calculateTotals: state => {
       state.basket.id = localStorage.getItem('basket_id')
       if(!state.basket) return
-      const shipping = 0;
+      const shipping = state.shipping;
       const subtotal = state.basket.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
       const total = subtotal + shipping;
       return { shipping, total, subtotal };
@@ -73,8 +80,16 @@ export default new Vuex.Store({
     },
     SET_ERRORS(state, errors) {
       state.errorMessages = errors;
+    },
+    SET_SHIPPING_PRICE(state, shipping) {
+      state.shipping = shipping;
+    },
+    SET_DELIVERY_METHOD_ID(state, methodId) {
+      state.deliveryMethodId = methodId;
+    },
+    SET_ADDRESS(state, address) {
+      state.shipToAddress = address;
     }
-
   },
   actions: {
     async selectProduct({ commit }, product) {
@@ -122,7 +137,6 @@ export default new Vuex.Store({
     async getCurrentUser({commit}) {
       await accountService.getUser(). then(res => {
         commit('SET_USER', res);
-      //  console.log('from store: ',res)
       }, error => {
         console.log(error)
       });
@@ -134,6 +148,15 @@ export default new Vuex.Store({
         commit('SET_ERRORS', error.response.data.errors);
     })
     },
+    async setBasketPrice({commit}, shippingPrice) {
+      commit('SET_SHIPPING_PRICE', shippingPrice)
+    },
+    async setDeilveryMethodId({commit}, methodId) {
+      commit('SET_DELIVERY_METHOD_ID', methodId)
+    },
+    async setAddress({commit}, address) {
+      commit('SET_ADDRESS', address);
+    }
   },
   modules: {},
 });

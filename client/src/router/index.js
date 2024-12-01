@@ -4,6 +4,7 @@ import HomeView from "../views/HomeView.vue";
 import ShopView from "@/views/ShopView.vue";
 import BasketView from "@/views/BasketView.vue";
 import CheckoutView from "@/views/CheckoutView.vue";
+import checkoutSuccess from "@/checkout/checkout-success.vue";
 import productDetails from "@/shop/components/product-details.vue";
 import LoginView from "@/views/LoginView.vue";
 import RegisterView from "@/views/RegisterView.vue";
@@ -144,6 +145,37 @@ const routes = [
     path: "/checkout",
     component: CheckoutView,
     beforeEnter: authGuard // Apply auth guard to this route
+  },
+  {
+    name: "success",
+    meta: {
+      title: "Success",
+      breadcrumb: [
+        {
+          text: "home",
+          disabled: false,
+          active: false,
+          to: { name: "home" },
+          parent: null, // No parent for the home route
+        },
+        {
+          text: "checkout",
+          disabled: false,
+          active: false,
+          to: { name: "checkout" },
+          parent: "home", // Parent is the home route
+        },
+        {
+          text: "success",
+          disabled: false,
+          active: false,
+          to: { name: "success" },
+          parent: "checkout", // Parent is the checkout route
+        },
+      ],
+    },
+    path: "/checkout/success",
+    component: checkoutSuccess,
   },
   {
     name: "login",

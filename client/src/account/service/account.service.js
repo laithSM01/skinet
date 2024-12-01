@@ -37,7 +37,6 @@ class AccountService {
   
     try {
       const response = await axiosWithAuth.get(`${this.baseUrl}account`);
-     // console.log("from service Account: ", response.data);
       return response.data; // Return the response data
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -50,6 +49,12 @@ class AccountService {
   static async checkEmailExists(email) {
     const typedEmail = await axios.get(`${this.baseUrl}account/emailexists?email=` + email);
     return typedEmail;
+  }
+  static getUserAddress() {
+    return axios.get(`${this.baseUrl}account/address`)
+  }
+  static updateUserAddress(data) {
+    return axios.put(`${this.baseUrl}account/address`,data)
   }
 }
 

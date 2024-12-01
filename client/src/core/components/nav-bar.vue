@@ -32,30 +32,29 @@
           </router-link>
           <!-- ِAccount dropstart button -->
           <div v-if="!userName" class="btn-group dropstart">
-            <button
-              type="button"
-              class="btn dropdown-toggle border-0 fs-2"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="bi bi-person"></i>
-            </button>
-            <ul class="dropdown-menu">
-              <li><router-link class="dropdown-item" to="/login">Login</router-link></li>
-              <li>
-                <router-link class="dropdown-item" to="/register">Register</router-link>
-              </li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </div>
-          <div v-if="userName" id="loggedin">
-            <b-dropdown :text="'Welcome ' + userName" class="m-2 fw-bold">
-              <b-dropdown-item href="#">Action</b-dropdown-item>
-              <b-dropdown-item href="#">Another action</b-dropdown-item>
-              <b-dropdown-item> <b-button variant="primary" size="sm" @click="logOut()">log out</b-button></b-dropdown-item>
-            </b-dropdown>
-          </div>
+    <!-- Bootstrap Vue dropdown for when user is not logged in -->
+    <b-dropdown text="Account" dropleft variant="link" class="fs-2">
+      <template #button-content>
+        <i class="bi bi-person fs-2"></i>
+      </template>
+      <b-dropdown-item to="/login">Login</b-dropdown-item>
+      <b-dropdown-item to="/register">Register</b-dropdown-item>
+      <b-dropdown-divider></b-dropdown-divider>
+      <b-dropdown-item href="#">Something else here</b-dropdown-item>
+    </b-dropdown>
+  </div>
+
+  <div v-if="userName" id="loggedin">
+    <!-- Bootstrap Vue dropdown for when the user is logged in -->
+    <b-dropdown :text="'Welcome ' + userName" class="m-2 fw-bold">
+      <b-dropdown-item href="#">Action</b-dropdown-item>
+      <b-dropdown-item href="#">Another action</b-dropdown-item>
+      <b-dropdown-item>
+        <b-button variant="primary" size="sm" @click="logOut">Log out</b-button>
+      </b-dropdown-item>
+    </b-dropdown>
+  </div>
+
         </div>
       </div>
     </nav>
