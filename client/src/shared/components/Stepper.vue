@@ -69,9 +69,14 @@
           </div>
           <div class="float-end ">
             <button 
-            v-if="!isLastStep"
+            v-if="!isLastStep, !thirdStep"
             @click="nextStep" :disabled="e6 === 4" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded"
               style="background-color: #0062CC ;">next</button>
+              <button
+              v-if="thirdStep"
+              @click="createPayment()"
+              class="btn btn-primary btn-rounded"
+              style="background-color: #0062CC ;">go to payment</button>
           </div>
   </div>
 </template>
@@ -81,6 +86,8 @@ import CheckoutAddress from "@/checkout/Checkout-Address.vue";
 import CheckoutDelivery from "@/checkout/Checkout-Delivery.vue";
 import CheckoutPayment from "@/checkout/Checkout-Payment.vue";
 import CheckoutReview from "@/checkout/Checkout-Review.vue";
+import basketSummary from "./basket-summary.vue";
+import BasketService from "@/basket/service/basket.service";
 export default {
   data() {
     return {
@@ -108,6 +115,9 @@ export default {
     isLastStep() {
       return this.e6 === 4;
     },
+    thirdStep() {
+      return this.e6 === 3;
+    }
   },
   methods: {
     nextStep() {
@@ -119,6 +129,9 @@ export default {
       if (this.e6 > 1) {
         this.e6--;
       }
+    },
+    createPayment() {
+      BasketService.createPaymentIntent(localStorage.getItem("basket_id"));
     }
   },
   created() {

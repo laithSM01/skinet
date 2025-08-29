@@ -26,5 +26,6 @@ namespace API.Dtos
 
         [Required]
         public string Type { get; set; }
+        public decimal ShippingPrice { get; set; }
     }
 }

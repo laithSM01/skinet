@@ -114,6 +114,7 @@ export default new Vuex.Store({
        await BasketService.setBasket(state.basket);
       } else {
         localStorage.removeItem('basket_id');
+        this.deliveryMethodId =  null;
        BasketService.deleteBasket(state.basket);
       }
     },

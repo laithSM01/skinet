@@ -31,6 +31,16 @@ class BasketService {
       throw error;
     }
   }
+
+  static async createPaymentIntent(basket_id) {
+    try {
+      await axios.post(`${this.baseUrl}payments/${basket_id}`)
+      alert("payment worked")
+    } catch(error) {
+      console.log("Payment Intent Failed: ", error)
+      throw error;
+    }
+  }
 }
 
 export default BasketService;

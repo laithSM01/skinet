@@ -31,5 +31,8 @@ export default {
             return this.$store.getters.calculateTotals
         },
     },
+    created() {
+        this.$store.getters.calculateTotals
+    }
 }
 </script>
